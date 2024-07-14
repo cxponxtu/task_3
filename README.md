@@ -1,39 +1,55 @@
 
 # Task 3
 
-## [A) Brain Socket](./a)
-## B) CTF
-- [Binary](b/binary)
-- [Forensics](b/forensics)
-- [Web](b/sqli)
-- [Reverse Engineering](b/reverse)
-- [Crypto](b/crypto)
+- [A) Brain Socket](#a-brain-socket)
+- [B) CTF](#b-ctf)
+  - [Binary Exploitation](#binary-exploitation)
+  - [Forensics](#forensics)
+  - [Web (SQL Injection)](#web-sql-injection)
+  - [Reverse Engineering](#reverse-engineering)
+  - [Cryptography](#cryptography)
 
-> __Note :__ Click on the topics for documentation.
+# A) Brain Socket 
+- Quiz Game is built using `socket` module in `python`
+- `threading` is used for accepting multiple connections at the same time.
+- Passwords are encrypted using `sha256` algorithm and stored securely in `MySQL` database.
+- Server and database are dockerised with `Alpine` as base image and image is uploaded @[DockerHub](https://hub.docker.com/r/revanth7733/brain_socket)
+- `mysql-connector-python` module is installed from `.tar.xz` file instead of installing it by `pip` to reduce image size.
+- To persist the database, volume named `db` is created and mounted at `/var/lib/mysql`
+## Dependencies
+- `pyfiglet` and `colorama` are required for `client.py`. Install them by
+```sh
+pip install pyfiglet colorama
+```
+## Demo 
 
-# Binary Exploitation
+https://github.com/user-attachments/assets/7df5730a-e315-4224-a486-fb417531f8fd
+
+# B) CTF
+
+## Binary Exploitation
 - This exploitation works by buffer overflow vulnerability of `gets` function.
 - Program is compiled with all the protections turned off.
 
-![sec](samples/buffer_sec.png)
+![sec](/samples/buffer_sec.png)
 
 - Program is 64bit executable and symbols are not stripped.
 
-![file](samples/buffer_file.png)
+![file](/samples/buffer_file.png)
 
 - Offset of RSP register (Stack Pointer) is found manually in `pwndbg`
 
-![offset](samples/buffer_offset.png)
+![offset](/samples/buffer_offset.png)
 
 - Payload is created using `pwntools` library and flag is fetched.
 
-![result](samples/buffer_result.png)
+![result](/samples/buffer_result.png)
 
-# Forensics
-- `encoded.txt` file is encoded with `base64` and hidden inside [delta.jpeg](delta.jpeg) using `steghide`.
+## Forensics
+- `encoded.txt` file is encoded with `base64` and hidden inside [delta.jpeg](/b/forensics/delta.jpeg) using `steghide`.
 - Passphrase is `1234`
 
-# Web (SQL Injection)
+## Web (SQL Injection)
 > __Environment :__ MySQL 8.2
 - SQL Query in application :
 ```mysql
@@ -59,7 +75,7 @@ SELECT name FROM users WHERE uname = '$user' AND pass = '$pass'
 
 ![home](/samples/sqli_home.png)
 
-# Reverse Engineering
+## Reverse Engineering 
 - Program gets input string, calculates the value and prints the flag if value matches to value hardcoded in program.
 - Static Analysis using Ghidra (if the source code is not known) :
 
@@ -81,9 +97,11 @@ SELECT name FROM users WHERE uname = '$user' AND pass = '$pass'
 39#Vx_TJr1RX|%xt|~&
 ```
 
-# Cryptography
-- RSA is build using python.
+## Cryptography 
+- RSA is built using python.
 - Message is encrypted with public key and decrypted with private key.
 - Message is also signed and signature is verified.
 
 ![crypto](/samples/crypto.png)
+
+
