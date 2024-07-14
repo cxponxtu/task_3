@@ -1,0 +1,26 @@
+name: brain_socket
+services:
+  brain_socket:
+    container_name: brain_socket
+    image: revanth7733/brain_socket
+    ports:
+      - "7779:7779"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - SERVER_HOST=0.0.0.0
+    depends_on:
+      - mysql
+    entrypoint: python -u /assets/server.py
+  
+  mysql:
+    container_name: mysql
+    image: mysql
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+volumes:
+  db:
